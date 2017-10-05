@@ -138,6 +138,10 @@ export class SongRender {
             sourceUrl: ''
         };
 
+        this['$nextTick'](() => {
+            document.getElementById("lyricBox").scrollTop = 0;
+        });
+
         this.translaters.translate(this.song.title, this.song.artist, (err, result) => {
             if(!err) {
                 try{

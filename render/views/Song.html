@@ -21,9 +21,9 @@
             <h4>{{ song.artist }}</h4>
         </header>
 
-        <div class="lyrics">
-            <div v-if="!settings.hideLyrics" id="lyricBox" class="lyrics-left" :class="settings.fontSize" v-bind:class="{'resized40': translatedSong.lyrics}">{{ song.lyric }}</div>
-            <div v-if="!settings.hideLyrics && translatedSong.lyrics" id="lyricBox" class="lyrics-right" :class="settings.fontSize">{{ translatedSong.lyrics }}</div>
+        <div id="lyricBox" style="overflow: auto;">
+            <div v-if="!settings.hideLyrics" class="lyrics-left" :class="settings.fontSize" v-bind:class="{'resized40': translatedSong.lyrics}">{{ song.lyric }}</div>
+            <div v-if="!settings.hideLyrics && translatedSong.lyrics" class="lyrics-right" :class="settings.fontSize">{{ translatedSong.lyrics }}</div>
         </div>
 
         <div v-if="!settings.hideLyrics" class="credits-source" >
