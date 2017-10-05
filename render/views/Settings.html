@@ -61,11 +61,7 @@
                 <ol>
                     <li>
                         <label>
-                            <span>Enable translate to lyrics</span>
-                            <select v-model="settings.translateLyrics" @change="onChangeSettings()">
-                                <option value="enable-translate-lyrics">Enable</option>
-                                <option value="disable-translate-lyrics">Disable</option>
-                            </select>
+                            <input type="checkbox" v-model="settings.translateLyrics" @change="onChangeSettings()"> Enable translate to lyrics
                         </label>
                     </li>
                     <li>
