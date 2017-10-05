@@ -28,7 +28,7 @@
 
         <div v-if="!settings.hideLyrics" class="credits-source" >
             <span v-if="song.sourceName">Source:  <a href="#" @click.prevent="openExternal(song.sourceUrl)">{{song.sourceName}}</a></span>
-            <span v-if="settings.translateLyrics" style="cursor: pointer;" @click.prevent="translateLyrics()"> | Translate lyrics</span>
+            <span v-if="song.sourceName && settings.translateLyrics" style="cursor: pointer;" @click.prevent="translateLyrics()"> | Translate lyrics</span>
             <a href="#" v-if="settings.translateLyrics" @click.prevent="openExternal(translatedSong.sourceUrl)">{{translatedSong.sourceName}}</a>
         </div>
 
