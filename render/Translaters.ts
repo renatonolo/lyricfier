@@ -27,26 +27,35 @@ export class Translaters {
     }
 
     loadPlugins() {
-        this.plugins = plugins.map((Plugin) => {
-            return new Plugin(request);
-        });
+        this.plugins = plugins.map(Plugin => new Plugin(request));
     }
 
     translate(title:string, artist:string, cb : (error : any, result : Result) => void){
-        const from: Result = {sourceName: '', sourceUrl: '', translated: null};
+        const from:Result = {sourceName: '', sourceUrl: '', translated: null};
         const normalizedTitle = this.normalizer.normalize(title);
 
-        async.detectSeries(this.plugins, (plugin : TranslatersLyrics, callback) => {
-            plugin.search(normalizedTitle, artist, (err, result) => {
-                if (!err) {
+        const tasks = this.plugins.map((plugin : TranslatersLyrics) => {
+            return (callback) => {
+                console.log('Translating with', plugin, 'normalizedTitle', normalizedTitle, 'artist', artist);
+                plugin.search(normalizedTitle, artist, (err, result) => {
+                    console.warn('Result with', plugin, 'normalizedTitle', normalizedTitle, 'artist', artist, 'err', err, 'result', result);
+                    if (err) {
+                        return callback(err);
+                    }
                     from.translated = result.translated;
                     from.sourceName = plugin.name;
                     from.sourceUrl = result.url;
-                }
-                callback(null, from);
-            })
-        }, (err) => {
-            cb(err, from);
+                    callback(null, from);
+                })
+            }
+        });
+        async.parallel(async.reflectAll(tasks), (err, results) => {
+            const result = results.find(x => !x.error);
+            if (result) {
+                cb(null, result.value);
+            } else {
+                cb(err, null);
+            }
         });
     }
 }
