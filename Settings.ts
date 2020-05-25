@@ -3,22 +3,26 @@ import storage = require('electron-json-storage');
 
 export interface SettingsValues {
     alwaysOnTop: boolean;
+    autoScroll: boolean;
     hideLyrics: boolean;
     theme: 'dark'|'light';
     fontSize: 'eight-pt'|'ten-pt'|'twelve-pt'|'fourteen-pt'|'sixteen-pt';
     refreshInterval: number;
     translateLyrics: boolean;
     translateLang: string;
+    closeToTray: boolean;
 }
 
 export const defaultSettings: SettingsValues = {
     hideLyrics: false,
     alwaysOnTop: false,
+    autoScroll: false,
     theme: 'light',
     fontSize: 'twelve-pt',
     refreshInterval: 5000,
     translateLyrics: false,
     translateLang: 'en-US'
+    closeToTray: false
 };
 
 export class Settings {
